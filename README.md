@@ -1,3 +1,4 @@
+[README.md](https://github.com/user-attachments/files/27112804/README.md)
 # Sales Forecasting with Ensemble Models
 
 Multi-series monthly sales projection using Gradient Boosting, Random Forest, and Prophet — with Optuna-tuned hyperparameters and scipy-optimized ensemble weights.
@@ -88,6 +89,47 @@ The 12-month forward forecast (Jan–Dec 2025) uses an **iterative multi-step** 
 $$\text{SMAPE} = \frac{1}{n} \sum_{t=1}^{n} \frac{|y_t - \hat{y}_t|}{(|y_t| + |\hat{y}_t|) / 2} \times 100$$
 
 SMAPE is preferred over MAPE here because the dataset contains near-zero values that would cause MAPE to become unstable or undefined.
+
+---
+
+## Results
+
+Evaluated on the 2024 hold-out test set (January – December 2024, unseen during training and tuning).
+
+### Model comparison
+
+| Rank | Model | SMAPE | MAPE | MAE | RMSE | R² |
+|------|-------|------:|-----:|----:|-----:|---:|
+| 🥇 | Ensemble (GB + RF + Prophet) | 23.54% | 34.17% | 9,691 | 16,519 | 0.858 |
+| 2 | Random Forest (tuned) | 24.39% | 38.66% | 9,769 | 15,641 | 0.872 |
+| 3 | XGBoost (ref.) | 26.95% | 36.58% | 11,830 | 22,115 | 0.745 |
+| 4 | LightGBM (ref.) | 29.36% | 42.54% | 13,132 | 20,991 | 0.770 |
+| 5 | Gradient Boosting (tuned) | 30.25% | 36.88% | 12,158 | 22,164 | 0.743 |
+| 6 | Baseline (lag-1 naive) | 32.37% | 43.30% | 13,785 | 21,642 | 0.755 |
+| 7 | Prophet (per series) | 47.37% | 48.00% | 18,794 | 29,472 | 0.546 |
+
+The ensemble reduced SMAPE by **8.8 percentage points** relative to the naive baseline and outperformed every individual model on that metric. Random Forest (tuned) achieved the best R² and RMSE individually, which reinforces its weight in the ensemble.
+
+Prophet underperformed as a standalone model on this dataset — likely due to the short series length and high inter-series variance — but contributed positively to the ensemble, suggesting it captured patterns that the tree-based models partially missed.
+
+### Per-series breakdown (Ensemble)
+
+| Product | Market | SMAPE | MAE |
+|---------|--------|------:|----:|
+| M1_P1 | M1 | 24.3% | 12,362 |
+| M1_P2 | M1 | 13.3% | 17,073 |
+| M1_P3 | M1 | 12.2% | 3,774 |
+| M1_P4 | M1 | 17.2% | 8,469 |
+| M2_P1 | M2 | 29.5% | 1,545 |
+| M2_P2 | M2 | 29.8% | 1,898 |
+| M2_P3 | M2 | 9.1% | 4,371 |
+| M2_P4 | M2 | 13.5% | 4,235 |
+| M3_P1 | M3 | 25.9% | 6,416 |
+| M3_P2 | M3 | 23.4% | 11,918 |
+| M3_P3 | M3 | 59.9% | 9,089 |
+| M3_P4 | M3 | 24.4% | 35,138 |
+
+Most series fall in the 9–30% SMAPE range. The outlier is **M3_P3** (59.9%), which likely reflects irregular demand patterns or structural breaks not captured by the available features. **M3_P4** shows the highest absolute error (MAE 35,138), consistent with it being a high-volume series where percentage errors translate into larger absolute deviations.
 
 ---
 
