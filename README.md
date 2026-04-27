@@ -1,14 +1,25 @@
 # Sales Forecasting with Ensemble Models
 
-Multi-series monthly sales projection using Gradient Boosting, Random Forest, and Prophet — with Optuna-tuned hyperparameters and scipy-optimized ensemble weights.
+## Business Problem
 
----
+Accurate sales forecasting is critical for inventory planning, revenue projection, and strategic decision-making.
 
-## Overview
+This project delivers a machine learning pipeline to generate reliable 12-month forecasts across multiple product-market combinations, improving accuracy compared to baseline approaches.
 
-This project builds a complete forecasting pipeline for a portfolio of anonymized product-market combinations. The goal is to generate reliable 12-month forward projections at monthly granularity, combining the strengths of tree-based ML models with a time-series-native approach (Prophet) through a data-driven ensemble.
+## TL;DR
 
-The notebook covers the full workflow: raw data ingestion, feature engineering, temporal cross-validation, hyperparameter optimization, ensemble construction, error analysis, and structured Excel export.
+* Ensemble model (Gradient Boosting + Random Forest + Prophet)
+* Hyperparameter tuning with Optuna
+* Weight optimization with SciPy
+* Reduced SMAPE by 8.8 pp vs baseline
+* 12-month forward projections generated
+
+## Business Impact
+
+* Improves demand planning accuracy
+* Supports better inventory and production decisions
+* Reduces risks of overstocking and stockouts
+* Enables reliable market share estimation based on forecasted demand
 
 ---
 
@@ -195,3 +206,11 @@ The projection output will be saved automatically to the path defined in Section
 - **Iterative multi-step projection** — correctly propagates uncertainty through the forecast horizon without leaking future values into lag features
 - **Per-series Prophet** — each series gets its own trend and seasonality model rather than a pooled approximation
 - **Scipy weight optimization** — ensemble weights are data-driven, not manually assigned
+
+---
+
+## Final Takeaways
+
+- Ensemble models outperform individual approaches for this dataset
+- Combining ML and time-series methods improves robustness
+- The pipeline is production-ready for iterative forecasting scenarios
