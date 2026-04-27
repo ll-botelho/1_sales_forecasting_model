@@ -1,4 +1,3 @@
-[README.md](https://github.com/user-attachments/files/27112804/README.md)
 # Sales Forecasting with Ensemble Models
 
 Multi-series monthly sales projection using Gradient Boosting, Random Forest, and Prophet — with Optuna-tuned hyperparameters and scipy-optimized ensemble weights.
