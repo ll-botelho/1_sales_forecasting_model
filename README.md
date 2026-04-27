@@ -97,6 +97,9 @@ Evaluated on the 2024 hold-out test set (January – December 2024, unseen durin
 
 ### Model comparison
 
+![Model Result](images/1_evaluation_for_all_models.png)
+
+
 | Rank | Model | SMAPE | MAPE | MAE | RMSE | R² |
 |------|-------|------:|-----:|----:|-----:|---:|
 | 🥇 | Ensemble (GB + RF + Prophet) | 23.54% | 34.17% | 9,691 | 16,519 | 0.858 |
@@ -129,6 +132,10 @@ Prophet underperformed as a standalone model on this dataset — likely due to t
 | M3_P4 | M3 | 24.4% | 35,138 |
 
 Most series fall in the 9–30% SMAPE range. The outlier is **M3_P3** (59.9%), which likely reflects irregular demand patterns or structural breaks not captured by the available features. **M3_P4** shows the highest absolute error (MAE 35,138), consistent with it being a high-volume series where percentage errors translate into larger absolute deviations.
+
+Here is the comparison between real results against the model projections in the test step:
+
+![Model Result](images/2_Projection_against_real_results.png)
 
 ---
 
