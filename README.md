@@ -23,13 +23,6 @@ This project delivers a machine learning pipeline to generate reliable 12-month 
 
 ---
 
-## Project Structure
-
-```
-├── market_sales_ensembles_projection.ipynb   # Main notebook (Google Colab)
-└── README.md
-```
-
 > The notebook reads data from and writes outputs to Google Drive. Path references follow a Colab + Drive setup and should be adjusted for other environments.
 
 ---
